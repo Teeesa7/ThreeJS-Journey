@@ -4,6 +4,9 @@ import GUI from 'lil-gui'
 import testVertexShader from './shaders/test/vertex.glsl'
 import testFragmentShader from './shaders/test/fragment.glsl'
 
+
+
+
 /**
  * Base
  */
@@ -27,7 +30,11 @@ console.log(geometry)
 const material = new THREE.ShaderMaterial({
     vertexShader: testVertexShader,
     fragmentShader: testFragmentShader,
-    side: THREE.DoubleSide
+    side: THREE.DoubleSide,
+    uniforms: {
+        uTime: {value: 0}
+    }
+
 })
 
 // Mesh
@@ -83,6 +90,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 const tick = () =>
 {
+
+    const clock = new THREE.Clock()
+    const elapsedTime = clock.getElapsedTime()
+
+    //Update material
+    material.uniforms.uTime.value = elapsedTime
+
     // Update controls
     controls.update()
 
